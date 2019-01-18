@@ -24,14 +24,16 @@ export default {
 	},
 	data: function () {
 		return {
-			showNav: false,
-			signedIn: true
+			showNav: false
 		}
 	},
 	computed: {
 		navbar() {
 			return this.$store.state.navbar
-    	}
+    	},
+		signedIn() {
+			return this.$store.state.login;
+		}
 	},
 }
 </script>

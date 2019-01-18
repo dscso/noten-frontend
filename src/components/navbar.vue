@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<a id="menuLink" class="menu-link" @click="toggleNav()">
+		<a id="menuLink" class="menu-link" :class="{active: navbar}" @click="toggleNav()">
 				<span></span>
 		</a>
 		<div id="menu" :class="{active: navbar}">
@@ -8,7 +8,9 @@
                 <a class="pure-menu-heading">Pure</a>
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item" v-for="page in pages">
-                        <a :href="page.url" class="pure-menu-link">{{page.name}}</a>
+						<router-link tag="li" :to="page.url">
+                        	<a class="pure-menu-link" @click="toggleNav()">{{page.name}}</a>
+						</router-link>
                     </li>
                 </ul>
         	</div>
@@ -27,10 +29,10 @@ export default {
 			pages: [
 				{
 					name: "Home",
-					url: "#/"
+					url: "/"
 				},{
 					name: "hello World",
-					url: "#/hi"
+					url: "/hi"
 				}
 			]
 		};
@@ -45,6 +47,11 @@ export default {
 		    return this.$store.state.navbar
         }
     },
+	watch: {
+		'$route' (from, to) {
+			this.$store.commit('toggle_navbar', false);
+		}
+	}
     
 }
 </script>

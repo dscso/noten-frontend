@@ -11,7 +11,7 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" placeholder="Passwort">
                 </div>
-                <button id="lbtn" class="pure-button">Login <i class="fas fa-sign-in-alt"></i></button>
+                <button id="lbtn" class="pure-button" @click="login()">Login <i class="fas fa-sign-in-alt"></i></button>
             </div>
         </form>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -19,8 +19,21 @@
 </template>
 
 <script>
+import store from '../store'
+import login from '../services/login'
+
 export default {
-    name: 'login'
+    name: 'login',
+    store: store,
+    data: function () {
+        return {}
+    },
+    methods: {
+        login: function () {
+
+            this.$store.commit("toggle_login")
+        }
+    }
 }
 </script>
 
