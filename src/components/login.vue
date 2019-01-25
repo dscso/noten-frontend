@@ -5,8 +5,9 @@
 			<message type="error" v-show="error" style="width:285px;">
 				<center>Fehler bei der Anmeldung.</center>
 			</message>
-			<input type="text" v-model="mail" class="login-input" placeholder="E-Mail" autofocus>
-			<input type="password" v-model="password" class="login-input" placeholder="Passwort">
+			<message type="loading" v-show="loading" style="width:285px;" />
+			<input type="email" name="email" v-model="mail" class="login-input" placeholder="E-Mail" autofocus autocomplete="on">
+			<input type="password" name="password" v-model="password" class="login-input" placeholder="Passwort" autocomplete="on">
 			<input type="submit" value="Anmelden" class="login-button">
 			<p class="forgot-password"><a @click="forgotLogin()">Passwort vergessen?</a></p>
 		</form>
@@ -14,8 +15,7 @@
 </template>
 
 <script>
-import store from '../store'
-//import login from '../services/login'
+import store from '../store/index'
 import message from './message'
 
 
@@ -27,21 +27,23 @@ export default {
 		return {
 			error: false,
 			password: null,
-			mail: null
+			mail: null,
+			loading: false
 		}
 	},
 	methods: {
 		login: function () {
-			this.error = true;
-			/*login.check(this.mail, this.mail)
-			.then(function (response) {
-				console.log(response)
-			})
-			.catch(function (error) {
-				console.log(error);
-			})*/
-			this.password = null;
-			this.$store.commit("toggle_login")
+			var self = this;
+			this.error = false;
+			this.loading = true;
+			this.$store.dispatch('login', { mail: this.mail, password: this.password })
+			.then(function (resp) {
+				self.loading = false;
+				self.$store.commit("toggle_login")
+			}, function (error) {
+				self.loading = false;
+				self.error = true;
+			});
 		},
 		forgotLogin: function () {
 			alert("Pech gehabt")
