@@ -12,7 +12,7 @@
 
 <script>
 import navbar from './components/navbar'
-import store from './store'
+import store from './store/index'
 import login from './components/login'
 
 export default {
