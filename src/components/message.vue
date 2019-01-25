@@ -1,5 +1,6 @@
 <template>
     <div :class="type">
+        <span v-show="type=='loading'">Laden...</span>
         <span :class="type">
         <slot></slot>
         </span>
@@ -12,7 +13,7 @@ export default {
     props: {
         type: {
             validator: function (value) {
-                return ['error'].indexOf(value) !== -1;
+                return ['error', 'loading'].indexOf(value) !== -1;
             }
         }
     }
