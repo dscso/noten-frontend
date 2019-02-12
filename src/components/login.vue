@@ -5,7 +5,7 @@
 			<message type="error" v-show="error" style="width:285px;">
 				<center>Fehler bei der Anmeldung.</center>
 			</message>
-			<message type="loading" v-show="loading" style="width:285px;" />
+			<spinner v-show="loading"/>
 			<input type="email" name="email" v-model="mail" class="login-input" placeholder="E-Mail" autofocus autocomplete="on">
 			<input type="password" name="password" v-model="password" class="login-input" placeholder="Passwort" autocomplete="on">
 			<input type="submit" value="Anmelden" class="login-button">
@@ -17,12 +17,12 @@
 <script>
 import store from '../store/index'
 import message from './message'
-
+import spinner from './spinner'
 
 export default {
 	name: 'login',
 	store: store,
-	components: {message},
+	components: {message, spinner},
 	data: function () {
 		return {
 			error: false,
@@ -39,10 +39,11 @@ export default {
 			this.$store.dispatch('login', { mail: this.mail, password: this.password })
 			.then(function (resp) {
 				self.loading = false;
-				self.$store.commit("toggle_login")
+				//self.$store.commit("toggle_login")
 			}, function (error) {
 				self.loading = false;
 				self.error = true;
+				self.$store.commit("toggle_login")
 			});
 		},
 		forgotLogin: function () {

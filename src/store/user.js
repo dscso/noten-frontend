@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import api from '../services/api'
 
-//const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user'));
 
 export default {
 	state: {
-		authenticated: false,
+		authenticated: localStorage.getItem('user') || false,
 		client_id: null,
 		token: null
 	},
 	actions: {
 		login(state, args) {
-			console.log(args.mail +"_" +args.password)
+			localStorage.setItem('user', true)
 			return new Promise(function (resolve, reject) {
-				console.log(this)
 				api().post("/login", {
-					mail: args.mail,
+					mail: args.mail,	
 					password: args.password
-				  }).then(function (response) {
+				}).then(function (response) {
+					console.log(response)
 					resolve(response);
 				}, function (error) {
 					reject(error);
