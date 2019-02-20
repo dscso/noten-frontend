@@ -5,21 +5,25 @@
     username: (mail)
     password: (password)
 
-### Response:
-```JSON
+### Response: 200/401
+```JS
 {
     tocken: "token valid for 30 days",
-    expiration: "UNIX timestamp"
+    expiration: "UNIX timestamp in seconds",
+    firstname: "The first name",
+    surname: "The family name",
+    uid: "the user id in the database used to make requests",
+    type: "1 SEKI, 2 SekII, 3 teacher, 4 admin",
 }
 ```
 The token will be saved as a cookie (called *token*) and will be send with every further request
 # Userinfo
-    /me [GET]
+    /user/<userid> [GET]
 
 ### Parameter
     token
-### Response
-```JSON
+### Response 200/403/403
+```JS
 {
     firsname: "The first name",
     surname: "The family name",
@@ -30,12 +34,12 @@ The token will be saved as a cookie (called *token*) and will be send with every
 
 This request returns general userinfo used by the webiterface
 
-# Teacher get classes
+# Teacher get courses
     /teacher/<teacherid>/courses [GET]
 ### Parameter
     token
-### Response
-```JSON
+### Response 200/403/404
+```JS
 {
     courses: [{
         subject: "the kind of the course (math, physics etc.)",
@@ -47,14 +51,14 @@ This request returns general userinfo used by the webiterface
 }
 ```
 
-This will be fetched when the teacher is logging in and the client shows all courses the teacher teaches
+This will be fetched when the teacher is logging in and the client shows all courses the teacher teaches. **classes he teaches like ma-4 etc.**
 
 # get Students of course
     /courses/<courseid>/students [GET]
-### Parameter
+### Parameter 200/403/404
     token
 ### Repsonse
-```JSON
+```JS
 {
     subject: "...",
     cid: "...",
@@ -69,3 +73,10 @@ This will be fetched when the teacher is logging in and the client shows all cou
 }
 ```
 This is used to render the colums of the table with the grades
+# Error message
+
+```JS
+{
+    error: 401/404,
+    msg: "Humanreadable Message",
+}
