@@ -2,8 +2,12 @@
     /login [POST]
 
 ### Parameter:
+```JS
+{
     username: (mail)
     password: (password)
+}
+```
 
 ### Response: 200/401
 ```JS
@@ -21,7 +25,12 @@ The token will be saved as a cookie (called *token*) and will be send with every
     /user/<userid> [GET]
 
 ### Parameter
+```JS
+{
     token
+}
+```
+
 ### Response 200/403/403
 ```JS
 {
@@ -37,7 +46,11 @@ This request returns general userinfo used by the webiterface
 # Teacher get courses
     /teacher/<teacherid>/courses [GET]
 ### Parameter
+```JS
+{
     token
+}
+```
 ### Response 200/403/404
 ```JS
 {
@@ -55,9 +68,13 @@ This will be fetched when the teacher is logging in and the client shows all cou
 
 # get Students of course
     /courses/<courseid>/students [GET]
-### Parameter 200/403/404
+### Parameter
+```JS
+{
     token
-### Repsonse
+}
+```
+### Repsonse 200/403/404
 ```JS
 {
     subject: "...",
