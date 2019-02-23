@@ -2,8 +2,12 @@
     /login [POST]
 
 ### Parameter:
+```JS
+{
     username: (mail)
     password: (password)
+}
+```
 
 ### Response: 200/401
 ```JS
@@ -20,8 +24,8 @@ The token will be saved as a cookie (called *token*) and will be send with every
 # Userinfo
     /user/<userid> [GET]
 
-### Parameter
-    token
+### Parameter [login required]
+None
 ### Response 200/403/403
 ```JS
 {
@@ -36,8 +40,8 @@ This request returns general userinfo used by the webiterface
 
 # Teacher get courses
     /teacher/<teacherid>/courses [GET]
-### Parameter
-    token
+### Parameter [login required]
+None
 ### Response 200/403/404
 ```JS
 {
@@ -55,9 +59,9 @@ This will be fetched when the teacher is logging in and the client shows all cou
 
 # get Students of course
     /courses/<courseid>/students [GET]
-### Parameter 200/403/404
-    token
-### Repsonse
+### Parameter [login_required]
+None
+### Repsonse 200/403/404
 ```JS
 {
     subject: "...",
@@ -80,3 +84,15 @@ This is used to render the colums of the table with the grades
     error: 401/404,
     msg: "Humanreadable Message",
 }
+```
+# Authentification
+Using authetification headers (like oauth)
+`Authorization` get set to `<userid>:<token>`
+Example:
+```YML
+Accept: application/json
+Authorization: 1:K3nnpiMFi8nEHnk0VK1RNR94a2PmOYC0
+Origin: http://localhost:8080
+Referer: http://localhost:8080/
+...
+```
