@@ -1,14 +1,24 @@
 import axios from 'axios'
 
-// todo
+const api = axios.create({
+    baseURL: "http://localhost:5000/",
+    withCredentials: false,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+})
 
-export default() => {
-    return axios.create({
-        baseURL: "http://localhost:5000/",
-        withCredentials: false,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
+export default {
+    login(e) {
+        return api.post('/login', e);
+    },
+    getUserInfo(e) {
+        console.log(e)
+        return api.get('/user/' + e.uid, {
+            headers: {
+                "Authorization": e.uid + ":" + e.token
+            }
+        });
+    }
 }

@@ -39,11 +39,9 @@ export default {
 			this.$store.dispatch('login', { mail: this.mail, password: this.password })
 			.then(function (resp) {
 				self.loading = false;
-				//self.$store.commit("toggle_login")
 			}, function (error) {
 				self.loading = false;
 				self.error = true;
-				self.$store.commit("toggle_login")
 			});
 		},
 		forgotLogin: function () {

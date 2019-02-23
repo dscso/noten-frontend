@@ -1,40 +1,63 @@
 import Vue from 'vue'
 import api from '../services/api'
 
-const user = JSON.parse(localStorage.getItem('user'));
+const uid = localStorage.getItem('uid')
+const token = localStorage.getItem('token')
 
 export default {
 	state: {
-		authenticated: localStorage.getItem('user') || false,
-		client_id: null,
-		token: null
+		uid: uid || null,
+		token: token || null,
+		firstname: null,
+		surname: null,
+		type: null
 	},
 	actions: {
-		login(state, args) {
-			localStorage.setItem('user', true)
+		login({commit, state}, args) {
 			return new Promise(function (resolve, reject) {
-				api().post("/login", {
-					mail: args.mail,	
-					password: args.password
-				}).then(function (response) {
+				api.login(args).then(function (response) {
 					console.log(response)
+					commit("AUTH", response.data)
+					localStorage.setItem('uid', state.uid)
+					localStorage.setItem('token', state.token)
 					resolve(response);
 				}, function (error) {
 					reject(error);
 				})
 			})
+		},
+		authenticate({commit, state}) { // this function gets called if page gets reloaded. It checks if the token still is valid
+			if (state.uid == null) {
+				commit('UNAUTH')
+				return
+			}
+			console.log("auth")
+			api.getUserInfo({
+				uid: state.uid,
+				token: state.token
+			}).then(function (resp) {
+				console.log(resp)
+			}, function (error) {
+				console.log("Token is not valid any more...")
+			})
 		}
 	},
 
 	mutations: {
-		CHANGE_CLIENT_ID(state, to) {
-			state.client_id = to;
+		AUTH(state, data) {
+			console.log(data)
+			state.uid = data.uid
+			state.firstname = data.firstname
+			state.surname = data.surname
+			state.type = data.type
+			state.token = data.token
 		},
-		CHANGE_TOKEN(state, to) {
-			state.token = to;
-		},
-		CHANGE_AUTHENTICATED(state, to) {
-			state.authenticated = to;
+		UNAUTH(state) {
+			state.uid = null
+			state.firstname = null
+			state.surname = null
+			state.type = null
+			state.token = null
 		}
 	},
 

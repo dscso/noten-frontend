@@ -3,7 +3,7 @@
 		<div id="layout" :class="{active: navbar}" v-if="signedIn">
 			<navbar/>
 			<div id="main">
-				<router-view/>
+				<router-view :key="$route.fullPath" />
 			</div>
 		</div>
 		<login v-else/>
@@ -21,6 +21,9 @@ export default {
 	components: {
 		navbar,
 		login
+	},
+	created() {
+		this.$store.dispatch('authenticate');
 	},
 	data: function () {
 		return {

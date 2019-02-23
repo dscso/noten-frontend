@@ -6,7 +6,7 @@
 		<!-- if you click somewhere in nav, nav toggles    \/ -->
 		<div id="menu" :class="{active: navbar}" @click="toggleNav()">
 			<div class="pure-menu">
-                <a class="pure-menu-heading">Pure</a>
+                <a class="pure-menu-heading">Hello {{name}}</a>
                 <ul class="pure-menu-list">
 					<router-link v-for="page in pages" :key="page.url" :to="page.url" class="pure-menu-item" tag="li">
 						<a class="pure-menu-link" @click="toggleNav()">{{page.name}}</a>
