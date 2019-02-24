@@ -14,8 +14,7 @@ export default {
         return api.post('/login', e);
     },
     getUserInfo(e) {
-        console.log(e)
-        return api.get('/user/' + e.uid, {
+        return api.get('/users/' + e.uid, {
             headers: {
                 "Authorization": e.uid + ":" + e.token
             }

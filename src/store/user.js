@@ -16,10 +16,7 @@ export default {
 		login({commit, state}, args) {
 			return new Promise(function (resolve, reject) {
 				api.login(args).then(function (response) {
-					console.log(response)
 					commit("AUTH", response.data)
-					localStorage.setItem('uid', state.uid)
-					localStorage.setItem('token', state.token)
 					resolve(response);
 				}, function (error) {
 					reject(error);
@@ -36,21 +33,24 @@ export default {
 				uid: state.uid,
 				token: state.token
 			}).then(function (resp) {
-				console.log(resp)
+				console.log("loaded data of user...")
+				commit("AUTH", resp.data)
 			}, function (error) {
 				console.log("Token is not valid any more...")
+				commit('UNAUTH')
 			})
 		}
 	},
 
 	mutations: {
 		AUTH(state, data) {
-			console.log(data)
 			state.uid = data.uid
 			state.firstname = data.firstname
 			state.surname = data.surname
 			state.type = data.type
 			state.token = data.token
+			localStorage.setItem('uid', state.uid)
+			localStorage.setItem('token', state.token)
 		},
 		UNAUTH(state) {
 			state.uid = null
@@ -58,10 +58,14 @@ export default {
 			state.surname = null
 			state.type = null
 			state.token = null
+			localStorage.removeItem('uid')
+			localStorage.removeItem('token')
 		}
 	},
 
 	getters: {
-
+		isAuthenticated: function (state) {
+			return (state.uid != null);
+		}
 	}
 }

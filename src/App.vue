@@ -35,7 +35,7 @@ export default {
 			return this.$store.state.navbar
     	},
 		signedIn() {
-			return this.$store.state.user.authenticated;
+			return this.$store.getters.isAuthenticated;
 		}
 	},
 }
