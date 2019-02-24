@@ -66,6 +66,18 @@ export default {
 	getters: {
 		isAuthenticated: function (state) {
 			return (state.uid != null);
+		},
+		name: function (state) {
+			return state.firstname + " " + state.surname
+		},
+		isTeacher: function (state) {
+			return (state.type === 3)
+		},
+		isStudent: function (state) {
+			return (state.type === 2 || state.type === 1)
+		},
+		type: function (state) {
+			return state.type
 		}
 	}
 }

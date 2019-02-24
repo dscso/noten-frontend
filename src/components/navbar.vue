@@ -6,10 +6,16 @@
 		<!-- if you click somewhere in nav, nav toggles    \/ -->
 		<div id="menu" :class="{active: navbar}" @click="toggleNav()">
 			<div class="pure-menu">
-                <a class="pure-menu-heading">Hello {{name}}</a>
+                <a class="pure-menu-heading">
+					<span v-show="isStudent">Schüler</span>
+					<span v-show="isTeacher">Lehrer</span>
+				</a>
                 <ul class="pure-menu-list">
 					<router-link v-for="page in pages" :key="page.url" :to="page.url" class="pure-menu-item" tag="li">
 						<a class="pure-menu-link" @click="toggleNav()">{{page.name}}</a>
+					</router-link>
+					<router-link to="/settings" class="pure-menu-item" tag="li">
+						<a class="pure-menu-link" @click="toggleNav()">Einstellungen</a>
 					</router-link>
                 </ul>
         	</div>
@@ -19,6 +25,7 @@
 
 <script>
 import store from '../store/index.js'
+import { mapGetters } from 'vuex';
 
 export default {
 	name: 'navbar',
@@ -41,14 +48,10 @@ export default {
 			this.$store.commit('toggle_navbar');
 		}
 	},
-    computed: {
-        navbar() {
-		    return this.$store.state.navbar
-        }
-    },
+    computed: mapGetters(['navbar', 'isStudent', 'isTeacher']),
 	watch: {
 		'$route' (from, to) {
-			// not needet maybe reuse later
+			// not needed maybe reuse later
 			//this.$store.commit('toggle_navbar', false);
 		}
 	}
