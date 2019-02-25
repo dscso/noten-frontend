@@ -23,6 +23,7 @@
 The token will be saved as a cookie (called *token*) and will be send with every further request
 # Userinfo
     /user/<userid> [GET]
+    /profile
 
 ### Parameter [login required]
 None
