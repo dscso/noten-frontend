@@ -11,9 +11,6 @@
 					<span v-show="isTeacher">Lehrer</span>
 				</a>
                 <ul class="pure-menu-list">
-					<router-link v-for="page in pages" :key="page.url" :to="page.url" class="pure-menu-item" tag="li">
-						<a class="pure-menu-link" @click="toggleNav()">{{page.name}}</a>
-					</router-link>
 					<router-link to="/settings" class="pure-menu-item" tag="li">
 						<a class="pure-menu-link" @click="toggleNav()">Einstellungen</a>
 					</router-link>
@@ -31,16 +28,6 @@ export default {
 	name: 'navbar',
 	data: function (){
 		return {
-			showNav: false,
-			pages: [
-				{
-					name: "Home",
-					url: "/"
-				},{
-					name: "hello World",
-					url: "/hi"
-				}
-			]
 		};
 	},
     methods: {

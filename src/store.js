@@ -7,14 +7,10 @@ export default new Vuex.Store({
 	strict: true,
 	state: {
 		navbar: false,
-		login: false
 	},
 	mutations: {
-		toggle_navbar(state, to) {
+		toggle_navbar (state, to) {
 			state.navbar = to || !state.navbar;
-		},
-		toggle_login(state) {
-			state.login = !state.login;
 		}
 	},
 	actions: {

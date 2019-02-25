@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div id="layout" :class="{active: navbar}" v-if="signedIn">
+		<div id="layout" :class="{active: navbar}" v-if="isAuthenticated">
 			<navbar/>
 			<div id="main">
 				<router-view :key="$route.fullPath" />
@@ -14,6 +14,7 @@
 import navbar from './components/navbar'
 import store from './store/index'
 import login from './components/login'
+import {mapGetters} from 'vuex'
 
 export default {
 	name: 'App',
@@ -30,14 +31,7 @@ export default {
 			showNav: false
 		}
 	},
-	computed: {
-		navbar() {
-			return this.$store.state.navbar
-    	},
-		signedIn() {
-			return this.$store.getters.isAuthenticated;
-		}
-	},
+	computed: mapGetters(['isAuthenticated', 'navbar'])
 }
 </script>
 

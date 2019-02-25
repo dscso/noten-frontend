@@ -7,17 +7,21 @@ const api = axios.create({
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-})
+});
+
+function auth (e) {
+    return {
+        headers: {
+            "Authorization": e.uid + ":" + e.token
+        }
+    }
+}
 
 export default {
     login(e) {
         return api.post('/login', e);
     },
     getUserInfo(e) {
-        return api.get('/users/' + e.uid, {
-            headers: {
-                "Authorization": e.uid + ":" + e.token
-            }
-        });
+        return api.get('/profile', auth(e));
     }
 }

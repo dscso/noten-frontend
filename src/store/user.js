@@ -48,7 +48,7 @@ export default {
 			state.firstname = data.firstname
 			state.surname = data.surname
 			state.type = data.type
-			state.token = data.token
+			state.token = state.token || data.token
 			localStorage.setItem('uid', state.uid)
 			localStorage.setItem('token', state.token)
 		},
