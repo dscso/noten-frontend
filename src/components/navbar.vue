@@ -11,8 +11,11 @@
 					<span v-show="isTeacher">Lehrer</span>
 				</a>
                 <ul class="pure-menu-list">
+					<router-link to="/courses" class="pure-menu-item" tag="li">
+						<a class="pure-menu-link">Kurse</a>
+					</router-link>
 					<router-link to="/settings" class="pure-menu-item" tag="li">
-						<a class="pure-menu-link" @click="toggleNav()">Einstellungen</a>
+						<a class="pure-menu-link">Einstellungen</a>
 					</router-link>
                 </ul>
         	</div>
@@ -35,7 +38,9 @@ export default {
 			this.$store.commit('toggle_navbar');
 		}
 	},
-    computed: mapGetters(['navbar', 'isStudent', 'isTeacher']),
+    computed: {
+		...mapGetters(['navbar', 'isStudent', 'isTeacher'])
+	},
 	watch: {
 		'$route' (from, to) {
 			// not needed maybe reuse later

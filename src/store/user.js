@@ -16,6 +16,7 @@ export default {
 		login({commit, state}, args) {
 			return new Promise(function (resolve, reject) {
 				api.login(args).then(function (response) {
+					api.passToken(state.uid, state.token) // passing new token to api
 					commit("AUTH", response.data)
 					resolve(response);
 				}, function (error) {
@@ -28,17 +29,18 @@ export default {
 				commit('UNAUTH')
 				return
 			}
-			console.log("auth")
-			api.getUserInfo({
-				uid: state.uid,
-				token: state.token
-			}).then(function (resp) {
+			api.passToken(state.uid, state.token) // pass token to api before first api call
+			api.getUserInfo().then(function (resp) {
 				console.log("loaded data of user...")
 				commit("AUTH", resp.data)
 			}, function (error) {
 				console.log("Token is not valid any more...")
 				commit('UNAUTH')
 			})
+		},
+		signOut({commit, state}) {
+			// TODO: Unvalidate token
+			commit('UNAUTH')
 		}
 	},
 
@@ -60,6 +62,7 @@ export default {
 			state.token = null
 			localStorage.removeItem('uid')
 			localStorage.removeItem('token')
+			api.passToken(null, null)
 		}
 	},
 

@@ -9,19 +9,16 @@ const api = axios.create({
     }
 });
 
-function auth (e) {
-    return {
-        headers: {
-            "Authorization": e.uid + ":" + e.token
-        }
-    }
-}
-
 export default {
-    login(e) {
+    passToken(uid, token) { // used to set Authorization header
+        console.log(api.defaults)
+        api.defaults.headers.common['Authorization'] = uid + ':' + token
+        console.log(api.defaults)
+    },
+    login(e) { // gets triggered if you click "login" on loginpage
         return api.post('/login', e);
     },
-    getUserInfo(e) {
-        return api.get('/profile', auth(e));
+    getUserInfo() { // gets triggered on every page reload
+        return api.get('/profile');
     }
 }
