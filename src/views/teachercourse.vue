@@ -1,14 +1,15 @@
 <template>
     <div>
         <div class="header">
-            <h1>Klasse {{id}}</h1>
+            <h1>Klasse</h1>
         </div>
+        <spinner />
         <ul>
             <li v-for="(course, index) in getCourses" :key="index">
-                <router-link :to="'/courses/'+course.cid" tag="a"> Kurs: {{ course.id }} ({{course.short}})</router-link>
+                <router-link :to="'/courses/'+course.cid" tag="a" :key="course.id"> Kurs: {{ course.id }} ({{course.short}})</router-link>
             </li>
         </ul>
-        <table class="pure-table">
+        <table class="pure-table" v-show="id != null">
         <thead>
             <tr>
                 <th>Name</th>
@@ -20,7 +21,7 @@
         <tbody>
             <tr v-for="(student, index) in getStudents(id)" :key="index" class="pure-table-odd">
                 <td>{{student.firstname}}</td>
-                <td>3</td><td>3</td><td>3</td><td>3</td>
+                <td>3</td><td>3</td><td>3</td>
             </tr>
         </tbody>
         </table>
@@ -30,8 +31,10 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import spinner from '../components/spinner'
 export default {
     name: 'teachercourse',
+    components: {spinner},
     props: {
         id: {
             type: String,
@@ -39,13 +42,12 @@ export default {
         }
     },
     data: function () {
-        return {
-        }
+        return {}
     },
     created() {
 		this.$store.dispatch('fetchCourses');
         if (this.id != null) {
-            this.$store.dispatch('fetchCourseData', this.id);
+            this.$store.dispatch('fetchStudents', this.id);
         }
 	},
     computed: {

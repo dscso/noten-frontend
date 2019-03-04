@@ -4,30 +4,37 @@ import api from '../services/api'
 export default {
 	state: {
 		courses: [],
-		coursedata: {}
+		students: {}
 	},
 	actions: {
 		fetchCourses: function ({commit, getters}) {
-			if (!getters.coursesDownloaded) { // prevent reloading
-				api.getTeacherCourses(getters.uid).then(function (resp) {
-					console.log("loaded courses list...")
-					commit('PUSH_COURSES', resp.data)
+			new Promise(function (resolve, reject) {
+				if (!getters.coursesDownloaded) { // prevent reloading
+					api.getTeacherCourses(getters.uid).then(function (resp) {
+						console.log("loaded courses list...")
+						commit('PUSH_COURSES', resp.data)
+						resolve(resp)
+					}, function (error) {
+						console.log("error")
+						reject(error)
+					})
+				}
+			});
+		},
+		fetchStudents: function ({commit}, cid) { // fetches the courses from vuex
+			new Promise(function (resolve, reject) {
+				api.getCourseData(cid).then(function (resp) {
+					console.log("loaded " + cid + " ...")
+					commit({
+						type:'PUSH_STUDENTS',
+						cid: cid,
+						data: resp.data
+					})
+					resolve(resp)
 				}, function (error) {
 					console.log("error")
+					reject(error)
 				})
-			}
-		},
-		fetchCourseData: function ({commit}, cid) { // fetches the courses from vuex
-			api.getCourseData(cid).then(function (resp) {
-				console.log("loaded data of course '"+cid+"'...")
-				console.log(resp.data)
-				commit({
-					type:'PUSH_COURSE_DATA',
-					cid: cid,
-					data: resp.data
-				})
-			}, function (error) {
-				console.log("error")
 			})
 		}
 	},
@@ -35,19 +42,22 @@ export default {
 		PUSH_COURSES(state, courses) {
 			state.courses = courses
 		},
-		PUSH_COURSE_DATA(state, payload) {
-			state.coursedata[payload.cid] = payload.data
+		PUSH_STUDENTS(state, payload) {
+			Vue.set(state.students, payload.cid, payload.data) // Vue.set seems to be needed because of object manipulation
 		}
 	},
 	getters: {
 		getCourses: function (state) {
 			return state.courses
 		},
+		getCourse: (state) => id => {
+			return state.courses[id]
+		},
 		coursesDownloaded: function (state) {
 			return !(state.courses.length == 0)
 		},
 		getStudents: (state) => cid => {
-			return state.coursedata[cid]
+			return state.students[cid]
 		}
 	}
 }

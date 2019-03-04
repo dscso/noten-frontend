@@ -35,21 +35,14 @@ export default {
 			
 		};
 	},
-		methods: {
+	methods: {
 		toggleNav: function () {
 			this.$store.commit('toggle_navbar');
 		}
 	},
-		computed: {
+	computed: {
 		...mapGetters(['navbar', 'isStudent', 'isTeacher'])
-	},
-	watch: {
-		'$route' (from, to) {
-			// not needed maybe reuse later
-			//this.$store.commit('toggle_navbar', false);
-		}
 	}
-		
 }
 </script>
 
