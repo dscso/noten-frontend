@@ -19,7 +19,10 @@ export default {
     getUserInfo() { // gets triggered on every page reload
         return api.get('/profile');
     },
-    getTeacherCourses(teacherid) {
+    getTeacherCourses(teacherid) { // fetches all courses that a teacher teaches
         return api.get('/teachers/' + teacherid + '/courses')
+    },
+    getCourseData(courseid) { // fetches students of certain course
+        return api.get('/courses/' + courseid + '/students')
     }
 }

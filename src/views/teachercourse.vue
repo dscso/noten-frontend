@@ -18,11 +18,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="pure-table-odd">
-                <td>Jurek Weber</td>
-                <td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td>
-                <td>4</td>
-                <td>1+</td>
+            <tr v-for="(student, index) in getStudents(id)" :key="index" class="pure-table-odd">
+                <td>{{student.firstname}}</td>
+                <td>3</td><td>3</td><td>3</td><td>3</td>
             </tr>
         </tbody>
         </table>
@@ -46,9 +44,12 @@ export default {
     },
     created() {
 		this.$store.dispatch('fetchCourses');
+        if (this.id != null) {
+            this.$store.dispatch('fetchCourseData', this.id);
+        }
 	},
     computed: {
-        ...mapGetters(['getCourses', 'isAuthenticated'])
+        ...mapGetters(['getCourses', 'getStudents'])
     }
 }
 </script>
