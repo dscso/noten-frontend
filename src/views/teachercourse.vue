@@ -3,6 +3,11 @@
         <div class="header">
             <h1>Klasse {{id}}</h1>
         </div>
+        <ul>
+            <li v-for="(course, index) in getCourses" :key="index">
+                <router-link :to="'/courses/'+course.cid" tag="a"> Kurs: {{ course.id }} ({{course.short}})</router-link>
+            </li>
+        </ul>
         <table class="pure-table">
         <thead>
             <tr>
@@ -26,13 +31,24 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-    name: 'teacherclass',
+    name: 'teachercourse',
     props: {
         id: {
             type: String,
             required: false
         }
+    },
+    data: function () {
+        return {
+        }
+    },
+    created() {
+		this.$store.dispatch('fetchCourses');
+	},
+    computed: {
+        ...mapGetters(['getCourses', 'isAuthenticated'])
     }
 }
 </script>

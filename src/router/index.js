@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/views/home'
 import http404 from '@/views/http404'
-import teacherclass from '@/views/teacherclass'
+import teacherclass from '@/views/teachercourse'
 import settings from '@/views/settings'
 
 Vue.use(Router)
@@ -15,9 +15,12 @@ export default new Router({
             name: 'home',
             component: home
         },{
-            path: '/class/:id',
-            name: 'teacherclass',
+            path: '/courses/:id',
+            name: 'teachercourse',
             props: true,
+            component: teacherclass
+        },{
+            path: '/courses',
             component: teacherclass
         },{
             path: '/settings',

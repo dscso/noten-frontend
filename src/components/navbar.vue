@@ -6,19 +6,20 @@
 		<!-- if you click somewhere in nav, nav toggles    \/ -->
 		<div id="menu" :class="{active: navbar}" @click="toggleNav()">
 			<div class="pure-menu">
-                <a class="pure-menu-heading">
+				<a class="pure-menu-heading">
 					<span v-show="isStudent">Schüler</span>
 					<span v-show="isTeacher">Lehrer</span>
 				</a>
-                <ul class="pure-menu-list">
+				<ul class="pure-menu-list">
 					<router-link to="/courses" class="pure-menu-item" tag="li">
 						<a class="pure-menu-link">Kurse</a>
 					</router-link>
 					<router-link to="/settings" class="pure-menu-item" tag="li">
 						<a class="pure-menu-link">Einstellungen</a>
 					</router-link>
-                </ul>
-        	</div>
+					
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
@@ -31,14 +32,15 @@ export default {
 	name: 'navbar',
 	data: function (){
 		return {
+			
 		};
 	},
-    methods: {
+		methods: {
 		toggleNav: function () {
 			this.$store.commit('toggle_navbar');
 		}
 	},
-    computed: {
+		computed: {
 		...mapGetters(['navbar', 'isStudent', 'isTeacher'])
 	},
 	watch: {
@@ -47,7 +49,7 @@ export default {
 			//this.$store.commit('toggle_navbar', false);
 		}
 	}
-    
+		
 }
 </script>
 

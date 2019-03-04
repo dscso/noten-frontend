@@ -18,6 +18,8 @@ export default {
 				api.login(args).then(function (response) {
 					api.passToken(state.uid, state.token) // passing new token to api
 					commit("AUTH", response.data)
+					localStorage.setItem('uid', state.uid) // setting cookies
+					localStorage.setItem('token', state.token)
 					resolve(response);
 				}, function (error) {
 					reject(error);
@@ -36,11 +38,15 @@ export default {
 			}, function (error) {
 				console.log("Token is not valid any more...")
 				commit('UNAUTH')
+				localStorage.removeItem('uid')
+				localStorage.removeItem('token')
 			})
 		},
 		signOut({commit, state}) {
 			// TODO: Unvalidate token
 			commit('UNAUTH')
+			localStorage.removeItem('uid')
+			localStorage.removeItem('token')
 		}
 	},
 
@@ -51,8 +57,6 @@ export default {
 			state.surname = data.surname
 			state.type = data.type
 			state.token = state.token || data.token
-			localStorage.setItem('uid', state.uid)
-			localStorage.setItem('token', state.token)
 		},
 		UNAUTH(state) {
 			state.uid = null
@@ -60,8 +64,6 @@ export default {
 			state.surname = null
 			state.type = null
 			state.token = null
-			localStorage.removeItem('uid')
-			localStorage.removeItem('token')
 			api.passToken(null, null)
 		}
 	},
@@ -69,6 +71,9 @@ export default {
 	getters: {
 		isAuthenticated: function (state) {
 			return (state.uid != null);
+		},
+		uid: function (state) {
+			return state.uid;
 		},
 		name: function (state) {
 			return state.firstname + " " + state.surname
