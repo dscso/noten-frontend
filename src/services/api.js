@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: "http://localhost:5000/", // TODO: make configurable
+    baseURL: "http://10.16.104.17:5000/", // TODO: make configurable
     withCredentials: false,
     headers: {
         'Accept': 'application/json',
@@ -11,7 +11,7 @@ const api = axios.create({
 
 export default {
     passToken(uid, token) { // used to set Authorization header
-        api.defaults.headers.common['Authorization'] = uid + ':' + token
+        api.defaults.headers.common['Authorization'] = 'Bearer ' + token
     },
     login(e) { // gets triggered if you click "login" on loginpage
         return api.post('/login', e);
