@@ -18,14 +18,19 @@ Jurek
 ## 05.03.2019
 
 Felix und Jurek:
-- Verständigung zur Noteneintrag API
+- Verständigung zur Noteneintrag API **protocol.md**
 - Dokumentation
 - Finale Arbeitsverteilung
 
 Felix
+- Vereinheitlichung der Namen
+  1. vorname: `firstname`
+  2. nachname: `surname`
 - Noten API fertig machen
+  1. GET, POST, DELETE, PUT
 - nen paar Admin Sachen
-...
+  1. Accounts erstellen (`/users/<id> [POST,PUT,DELETE,GET]`)
+  2. Klassen erstellen
 
 Jurek
 - Einbindung des "Guten" CSS'
