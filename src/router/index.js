@@ -20,7 +20,7 @@ export default new Router({
             props: true,
             component: teacherclass
         },{
-            path: '/courses',
+            path: '/teacher/courses',
             component: teacherclass
         },{
             path: '/settings',
