@@ -16,8 +16,8 @@ export default {
 		login({commit, state}, args) {
 			return new Promise(function (resolve, reject) {
 				api.login(args).then(function (response) {
+					commit("AUTH", response.data) // save user info to state
 					api.passToken(state.token) // passing new token to api
-					commit("AUTH", response.data)
 					localStorage.setItem('uid', state.uid) // setting cookies
 					localStorage.setItem('token', state.token)
 					resolve(response);
