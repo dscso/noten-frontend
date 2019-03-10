@@ -12,11 +12,9 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
             component: home
         },{
-            path: '/courses/:id',
-            name: 'teachercourse',
+            path: '/teacher/courses/:id',
             props: true,
             component: teacherclass
         },{
@@ -24,11 +22,9 @@ export default new Router({
             component: teacherclass
         },{
             path: '/settings',
-            name: 'settings',
             component: settings
         },{
             path: "**",
-            name: "http404",
             component: http404
         }
     ]

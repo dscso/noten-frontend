@@ -16,7 +16,7 @@ export default {
 		login({commit, state}, args) {
 			return new Promise(function (resolve, reject) {
 				api.login(args).then(function (response) {
-					api.passToken(state.uid, state.token) // passing new token to api
+					api.passToken(state.token) // passing new token to api
 					commit("AUTH", response.data)
 					localStorage.setItem('uid', state.uid) // setting cookies
 					localStorage.setItem('token', state.token)
@@ -31,7 +31,7 @@ export default {
 				commit('UNAUTH')
 				return
 			}
-			api.passToken(state.uid, state.token) // pass token to api before first api call
+			api.passToken(state.token) // pass token to api before first api call
 			api.getUserInfo().then(function (resp) {
 				console.log("loaded data of user...")
 				commit("AUTH", resp.data)
@@ -64,7 +64,7 @@ export default {
 			state.surname = null
 			state.type = null
 			state.token = null
-			api.passToken(null, null)
+			api.passToken(null)
 		}
 	},
 

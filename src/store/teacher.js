@@ -51,7 +51,11 @@ export default {
 			return state.courses
 		},
 		getCourse: (state) => id => {
-			return state.courses[id]
+			if (state.courses[id] == null) {
+				return {id: null, short: null}
+			} else {
+				return state.courses[id]
+			}
 		},
 		coursesDownloaded: function (state) {
 			return !(state.courses.length == 0)
