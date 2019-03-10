@@ -51,11 +51,12 @@ export default {
 			return state.courses
 		},
 		getCourse: (state) => id => {
-			if (state.courses[id] == null) {
-				return {id: null, short: null}
-			} else {
-				return state.courses[id]
+			for (let index = 0; index < state.courses.length; ++index) {
+				if (state.courses[index].cid == id) {
+					return state.courses[index]
+				}
 			}
+			return {}
 		},
 		coursesDownloaded: function (state) {
 			return !(state.courses.length == 0)

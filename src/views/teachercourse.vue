@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header">
-            <h1>Kurs {{getCourse.short}}</h1>
+            <h1>Kurs {{getCourse(id).short}}</h1>
             <h2 v-show="!id > 0">Bitte wählen Sie einen Kurs aus</h2>
         </div>
         <div class="pure-menu pure-menu-horizontal">
@@ -54,7 +54,7 @@ export default {
     },
     created() {
 		this.$store.dispatch('fetchCourses');
-        if (this.id != null) {
+        if (this.id != null) { // checks if id is set in URL params
             this.$store.dispatch('fetchStudents', this.id);
         }
 	},

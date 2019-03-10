@@ -14,6 +14,9 @@
 					<router-link to="/teacher/courses" class="pure-menu-item" tag="li" v-show="isTeacher">
 						<a class="pure-menu-link">Kurse</a>
 					</router-link>
+					<router-link to="/student/courses" class="pure-menu-item" tag="li" v-show="isStudent">
+						<a class="pure-menu-link">Kurse</a>
+					</router-link>
 					<router-link to="/settings" class="pure-menu-item" tag="li">
 						<a class="pure-menu-link">Einstellungen</a>
 					</router-link>
