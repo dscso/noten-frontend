@@ -80,7 +80,7 @@ None
 This is used to render the colums of the table with the grades
 
 
-# get Marks for teacher
+# Get marks for teacher
     /courses/<cid>/marks
 
 ## Parameters
@@ -104,6 +104,34 @@ This is used to render the colums of the table with the grades
     }
 }
 ```
+
+# Get marks for student
+    /student/marks
+
+## Paramteters
+```JS
+{
+    meta: {
+        "<markmetaid>": {
+            name: "<row label>"
+            valance: "e.g. 0.25 for relative or 2 times for fixed"
+        },...
+    },
+    courses: {
+        "<courseid>":[
+            {
+                metaid: "<id>",
+                points: "0-15",
+            },...
+        ]...
+    }
+}
+```
+
+
+
+
+
 
 # Error message
 
