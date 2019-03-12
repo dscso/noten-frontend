@@ -83,9 +83,9 @@ This is used to render the colums of the table with the grades
 # Get marks for teacher
     /courses/<cid>/marks
 
-## Parameters
+## Parameters [login_required] (teacher)
     <cid>
-## Response
+## Response 200/401
 ```JS
 {
     meta: {
@@ -108,7 +108,9 @@ This is used to render the colums of the table with the grades
 # Get marks for student
     /student/marks
 
-## Paramteters
+## Paramteters [login required] (student)
+    None
+## Response 200/401
 ```JS
 {
     meta: {
@@ -127,8 +129,6 @@ This is used to render the colums of the table with the grades
     }
 }
 ```
-
-
 
 
 
