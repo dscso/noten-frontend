@@ -78,6 +78,33 @@ None
 }
 ```
 This is used to render the colums of the table with the grades
+
+
+# get Marks for teacher
+    /courses/<cid>/marks
+
+## Parameters
+    <cid>
+## Response
+```JS
+{
+    meta: {
+        "<markmetaid>": {
+            name: "<row label>"
+            valance: "e.g. 0.25 for relative or 2 times for fixed"
+        },...
+    },
+    students: {
+        "<uid>":[
+            {
+                metaid: "<id>",
+                points: "0-15",
+            },...
+        ]...
+    }
+}
+```
+
 # Error message
 
 ```JS
