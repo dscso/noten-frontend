@@ -129,8 +129,18 @@ This is used to render the colums of the table with the grades
     }
 }
 ```
+# get set put mark
+    /mark/<courseid>/<markmetaid>/<studentid> [GET/PUT/POST/DELETE]
+## Parameters [login_required] (Teacher)
+    points (PUT/POST) or none (GET/DELETE)
+## Response 200/401
 
-
+```JS
+{
+  points: 0-15
+}
+```
+   
 
 
 # Error message
