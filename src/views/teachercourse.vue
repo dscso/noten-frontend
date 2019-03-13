@@ -21,9 +21,7 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th class="rotate">Klausur 1</th>
-                <th class="rotate">Klausur 2</th>
-                <th class="rotate">Mündl 1</th>
+                <th v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" class="rotate">{{meta.name}}</th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +33,7 @@
         </table>
         <!-- Mark selector -->
         <div>
-        <markselector @onChange="change"/>
-            
+            <markselector @onChange="change"/>
         </div>
     </div>
 </template>
@@ -64,11 +61,11 @@ export default {
 		this.$store.dispatch('fetchCourses');
         if (this.id != null) { // checks if id is set in URL params
             this.$store.dispatch('fetchStudents', this.id);
+            this.$store.dispatch('fetchMarks', this.id);
         }
 	},
     methods: {
         renderMarks: function (id) {
-            console.log(id)
             return [{"mark": 15, "mid":1},{"mark": 10, "mid":2}, {"mark": 11, "mid":3}]
         },
         change: function (to) {
@@ -76,7 +73,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getCourses', 'getStudents', 'getCourse'])
+        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas'])
     }
 }
 </script>

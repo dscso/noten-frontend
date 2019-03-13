@@ -4,7 +4,8 @@ import api from '../services/api'
 export default {
 	state: {
 		courses: [],
-		students: {}
+		students: {},
+		marks: {}
 	},
 	actions: {
 		fetchCourses: function ({commit, getters}) {
@@ -37,10 +38,15 @@ export default {
 				})
 			})
 		},
-		fetchMarks: function ({commit}, cid, uid) {
+		fetchMarks: function ({commit}, cid) {
 			new Promise(function (resolve, reject) {
-				api.getMarks(cid, uid).then(function (resp) {
-					console.log("loaded " + cid + ":" + sid + " ...")
+				api.getTeacherMarks(cid).then(function (resp) {
+					console.log("loaded marks of course " + cid)
+					commit({
+						type:'PUSH_MARKS',
+						cid: cid,
+						data: resp.data
+					})
 					// TODO state commits
 					resolve(resp)
 				}, function (error) {
@@ -56,6 +62,9 @@ export default {
 		},
 		PUSH_STUDENTS(state, payload) {
 			Vue.set(state.students, payload.cid, payload.data) // Vue.set seems to be needed because of object manipulation
+		},
+		PUSH_MARKS(state, payload) {
+			Vue.set(state.marks, payload.cid, payload.data)
 		}
 	},
 	getters: {
@@ -75,6 +84,14 @@ export default {
 		},
 		getStudents: (state) => cid => {
 			return state.students[cid]
+		},
+		getMarkMetas: (state) => courseid => {
+			var marks = state.marks[courseid] || {}
+			return marks.metas || {}
+		},
+		getMarksOfStudent: (state) => courseid => studentid => {
+			tmp = state.marks[courseid] || {}
+			return tmp[studentid] || {}
 		}
 	}
 }

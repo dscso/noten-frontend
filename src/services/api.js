@@ -25,7 +25,7 @@ export default {
     getCourseData(courseid) { // fetches students of certain course
         return api.get('/courses/' + courseid + '/students')
     },
-    getGrades(cid, uid) {
-        return api.get('/courses/' + cid + '/students/' + uid + '/marks')
+    getTeacherMarks(cid, uid) {
+        return api.get('/courses/' + cid + '/marks')
     }
 }
