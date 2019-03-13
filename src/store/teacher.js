@@ -89,9 +89,10 @@ export default {
 			var marks = state.marks[courseid] || {}
 			return marks.metas || {}
 		},
-		getMarksOfStudent: (state) => courseid => studentid => {
-			tmp = state.marks[courseid] || {}
-			return tmp[studentid] || {}
+		getMarks: (state) => (courseid, studentid) => {
+			var tmp = state.marks[courseid] || {}
+			tmp = tmp.students || {}
+			return tmp[studentid] || {} // TODO: make this beautiful 
 		}
 	}
 }

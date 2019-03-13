@@ -27,7 +27,9 @@
         <tbody>
             <tr v-for="(student, index) in getStudents(id)" :key="index" class="pure-table-odd">
                 <td>{{student.surname}}, {{student.firstname}}</td>
-                <td v-for="(mark, index) in renderMarks(student.uid)" :key="index">{{mark.mark}}</td>
+                <td v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid"><!-- Seems weird but needs to be like that-->
+                    {{getElement(student, meta).mark}}
+                </td> 
             </tr>
         </tbody>
         </table>
@@ -70,10 +72,18 @@ export default {
         },
         change: function (to) {
             console.log('button pressed' + to)
+        },
+        getElement(student, meta) { // for table generation
+            var marks = this.getMarks(this.id, student.uid)
+            for (let i = 0; marks.length > i; i++) {
+                if (marks[i].metaid == meta.mid) {
+                    return marks[i]
+                }
+            }
         }
     },
     computed: {
-        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas'])
+        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas', 'getMarks'])
     }
 }
 </script>
