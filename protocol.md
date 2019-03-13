@@ -130,8 +130,7 @@ This is used to render the colums of the table with the grades
 }
 ```
 # get set put mark
-  /mark/<courseid>/<markmetaid>/<studentid>
-
+    /mark/<courseid>/<markmetaid>/<studentid>
 ## Parameters [login_required] (Teacher)
    points (PUT/POST) or none (GET)
 ## Response 200/401
