@@ -36,6 +36,18 @@ export default {
 					reject(error)
 				})
 			})
+		},
+		fetchMarks: function ({commit}, cid, uid) {
+			new Promise(function (resolve, reject) {
+				api.getMarks(cid, uid).then(function (resp) {
+					console.log("loaded " + cid + ":" + sid + " ...")
+					// TODO state commits
+					resolve(resp)
+				}, function (error) {
+					console.log("error")
+					reject(error)
+				})
+			});
 		}
 	},
 	mutations: {

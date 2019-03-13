@@ -28,8 +28,8 @@
         </thead>
         <tbody>
             <tr v-for="(student, index) in getStudents(id)" :key="index" class="pure-table-odd">
-                <td>{{student.firstname}}</td>
-                <td>3</td><td>3</td><td>3</td>
+                <td>{{student.surname}}, {{student.firstname}}</td>
+                <td v-for="(mark, index) in renderMarks(student.uid)" :key="index">{{mark.mark}}</td>
             </tr>
         </tbody>
         </table>
@@ -58,6 +58,12 @@ export default {
             this.$store.dispatch('fetchStudents', this.id);
         }
 	},
+    methods: {
+        renderMarks: function (id) {
+            console.log(id)
+            return [{"mark": 15, "mid":1},{"mark": 10, "mid":2}, {"mark": 11, "mid":3}]
+        }
+    },
     computed: {
         ...mapGetters(['getCourses', 'getStudents', 'getCourse'])
     }
