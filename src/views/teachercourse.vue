@@ -19,7 +19,7 @@
         <br />
         <table class="pure-table" v-show="id != null">
         <thead>
-            <tr>
+            <tr>    
                 <th>Name</th>
                 <th v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" class="rotate">{{meta.name}}</th>
             </tr>
@@ -67,9 +67,6 @@ export default {
         }
 	},
     methods: {
-        renderMarks: function (id) {
-            return [{"mark": 15, "mid":1},{"mark": 10, "mid":2}, {"mark": 11, "mid":3}]
-        },
         change: function (to) {
             console.log('button pressed' + to)
         },
@@ -80,6 +77,7 @@ export default {
                     return marks[i]
                 }
             }
+            return {}
         }
     },
     computed: {
