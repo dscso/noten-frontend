@@ -33,16 +33,22 @@
             </tr>
         </tbody>
         </table>
-
+        <!-- Mark selector -->
+        <div>
+        <markselector @onChange="change"/>
+            
+        </div>
     </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 import spinner from '../components/spinner'
+import markselector from '../components/markselector'
+
 export default {
     name: 'teachercourse',
-    components: {spinner},
+    components: {spinner, markselector},
     props: {
         id: {
             type: String,
@@ -50,7 +56,9 @@ export default {
         }
     },
     data: function () {
-        return {}
+        return {
+            
+        }
     },
     created() {
 		this.$store.dispatch('fetchCourses');
@@ -62,6 +70,9 @@ export default {
         renderMarks: function (id) {
             console.log(id)
             return [{"mark": 15, "mid":1},{"mark": 10, "mid":2}, {"mark": 11, "mid":3}]
+        },
+        change: function (to) {
+            console.log('button pressed' + to)
         }
     },
     computed: {
