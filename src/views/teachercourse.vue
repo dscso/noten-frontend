@@ -4,17 +4,23 @@
             <h1>Kurs {{getCourse(id).short}}</h1>
             <h2 v-show="!id > 0">Bitte wählen Sie einen Kurs aus</h2>
         </div>
-        <div class="pure-menu pure-menu-horizontal">
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                    <a id="select-course" class="pure-menu-link">Kurs <spinner v-show="!coursesLoaded" /></a>
-                    <ul class="pure-menu-children">
-                        <li v-for="(course, index) in getCourses" :key="index" class="pure-menu-item">
-                            <router-link :to="'/teacher/courses/'+course.cid" tag="a" :key="course.id" class="pure-menu-link">Kurs: {{ course.id }} ({{course.short}})</router-link>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="content">
+            <div class="pure-menu pure-menu-horizontal">
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                        <a id="select-course" class="pure-menu-link">Kurs <spinner v-show="!coursesDownloaded" /></a>
+                        <ul class="pure-menu-children">
+                            <li v-for="(course, index) in getCourses" :key="index" class="pure-menu-item">
+                                <router-link :to="'/teacher/courses/'+course.cid" tag="a" :key="course.id" class="pure-menu-link">Kurs: {{ course.id }} ({{course.short}})</router-link>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div v-show="error">
+                <message type="error">Ups, da ist wohl was schiefgelaufen!</message>
+                <br /><br /><br />
+            </div>
         </div>
         <spinner v-show="coursesReady() && id != null" />
         <table class="pure-table" v-show="id != null">
@@ -42,10 +48,10 @@
 import {mapGetters, mapActions} from 'vuex'
 import spinner from '../components/spinner'
 import markselector from '../components/markselector'
-
+import message from '../components/message.vue'
 export default {
     name: 'teachercourse',
-    components: {spinner, markselector},
+    components: {spinner, markselector, message},
     props: {
         id: {
             type: String,
@@ -56,7 +62,6 @@ export default {
         return {
             selectorMeta: {},
             selectorStudent: {},
-            coursesLoaded: false,
             courseLoaded: false,
             studentsLoaded: false,
             error: false
@@ -66,7 +71,7 @@ export default {
         var self = this;
 		this.$store.dispatch('fetchCourses')
         .then(function (resp) {
-            self.coursesLoaded = true
+            // do nothing
         }, function (error) {
             self.error = true
         });
@@ -91,13 +96,20 @@ export default {
         },
         change: function (to) {
             var self = this
+            self.studentsLoaded = false;
             this.$store.dispatch('setMark', {
                 studentid: this.selectorStudent.uid,
                 courseid: this.id,
                 markmetaid: this.selectorMeta.mid,
                 mark: to
             }).then(function(data) {
-                self.$store.dispatch('fetchMarks', self.id);
+                self.$store.dispatch('fetchMarks', self.id).then(function (resp) {
+                    self.studentsLoaded = true;
+                }, function (error) {
+                    self.error = true
+                });
+            }, function (error) {
+                self.error = true;
             });
         },
         showMarkSelector: function (meta, student) {
@@ -115,7 +127,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas', 'getMarks']), // make getters accessable in this component
+        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas', 'getMarks', 'coursesDownloaded']), // make getters accessable in this component
     }
 }
 </script>

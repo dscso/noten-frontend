@@ -1,6 +1,6 @@
 <template>
     <div :class="type">
-        <span v-show="type=='loading'">Laden...</span>
+        <span v-show="type=='error'">Fehler:</span>
         <slot></slot>
         </span>
     </div>
