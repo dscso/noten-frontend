@@ -65,6 +65,17 @@ export default {
 					reject(error)
 				});
 			});
+		},
+		newMarkMeta: function({commit}, params) {
+			return new Promise(function (resolve, reject) {
+				api.newMarkMeta(params).then(function(resp) {
+					console.log(resp)
+					resolve(resp)
+				}, function (error) {
+					console.log(error)
+					reject(error)
+				});
+			});
 		}
 	},
 	mutations: {

@@ -30,5 +30,8 @@ export default {
     },
     setMark(params) { // set mark
         return api.post('/courses/' + params.courseid + '/students/' + params.studentid + '/marks/' + params.markmetaid, {mark: params.mark})
+    },
+    newMarkMeta(params) {
+        return api.post('/courses/' + params.courseid + '/markmetas', {name: params.name, valence:params.valance})
     }
 }
