@@ -25,7 +25,10 @@ export default {
     getCourseData(courseid) { // fetches students of certain course
         return api.get('/courses/' + courseid + '/students')
     },
-    getTeacherMarks(cid, uid) {
+    getTeacherMarks(cid) {// get marks for a course
         return api.get('/courses/' + cid + '/marks')
+    },
+    setMark(params) { // set mark
+        return api.post('/courses/' + params.courseid + '/students/' + params.studentid + '/marks/' + params.markmetaid)
     }
 }

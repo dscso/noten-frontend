@@ -4,7 +4,7 @@
             <div v-for="row in 5" :key="row">
                 {{row}}
                 <span v-for="index in 3" :key="index">
-                    <button class="selector-button" v-bind:class="{'active': convToNr(row, index) === current}" @click="$emit('onChange', convToNr(row, index)) * row">{{convToNr(row, index)}}</button>
+                    <button class="selector-button" v-bind:class="{'active': convToNr(row, index) === current}" @click="$emit('onChange', convToNr(row, index))">{{convToNr(row, index)}}</button>
                 </span>
             </div>
             <div>
@@ -25,7 +25,7 @@ export default {
         convToNr: function (row, index) {
             return 16 - (index + (row - 1) * 3)
         }
-    },
+    }
 }
 </script>
 <style scoped>

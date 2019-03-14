@@ -29,7 +29,7 @@
                 <td>{{student.surname}}, {{student.firstname}}</td>
                 <td v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" @click="showMarkSelector(meta, student)" ><!-- creates any row in this column in the table-->
                     {{getElement(student, meta).mark}}
-                    <markselector v-show="selectorMeta.mid == meta.mid && selectorStudent.uid == student.uid" v-bind:current="getElement(student, meta).mark" class="markselector" @onChange="change()"/>
+                    <markselector v-show="selectorMeta.mid == meta.mid && selectorStudent.uid == student.uid" v-bind:current="getElement(student, meta).mark" class="markselector" @onChange="change"/>
                 </td>
             </tr>
         </tbody>
@@ -70,7 +70,12 @@ export default {
         change: function (to) {
             //this.selectorStudent
             //this.selectorMeta
-            console.log("pressed!!!!")
+            this.$store.dispatch('setMark', {
+                studentid: this.selectorStudent.uid,
+                courseid: this.id,
+                markmetaid: this.selectorMeta.mid,
+                mark: to
+            });
         },
         showMarkSelector: function (meta, student) {
             this.selectorMeta = meta;
@@ -88,7 +93,6 @@ export default {
     },
     computed: {
         ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas', 'getMarks']), // make getters accessable in this component
-        ...mapActions(['setMark'])
     }
 }
 </script>

@@ -54,6 +54,15 @@ export default {
 					reject(error)
 				})
 			});
+		},
+		setMark: function({commit}, params) {
+			new Promise(function (resolve, reject) {
+				api.setMark(params).then(function(resp) {
+					console.log("wird noch nicht passieren")
+				}, function (error) {
+					console.log(error)
+				});
+			});
 		}
 	},
 	mutations: {
