@@ -68,6 +68,8 @@ export default {
     position:fixed;
     left: 50%;
     margin-left: -150px;
+    top: 50%;
+    margin-top: -200px;
     width: 300px;
     padding: 20px 30px;
     background-color: #fff;
