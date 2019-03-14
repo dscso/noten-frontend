@@ -9,7 +9,7 @@ export default {
 	},
 	actions: {
 		fetchCourses: function ({commit, getters}) {
-			new Promise(function (resolve, reject) {
+			return new Promise(function (resolve, reject) {
 				if (!getters.coursesDownloaded) { // prevent reloading
 					api.getTeacherCourses(getters.uid).then(function (resp) {
 						console.log("loaded courses list...")
@@ -23,7 +23,7 @@ export default {
 			});
 		},
 		fetchStudents: function ({commit}, cid) { // fetches the courses from vuex
-			new Promise(function (resolve, reject) {
+			return new Promise(function (resolve, reject) {
 				api.getCourseData(cid).then(function (resp) {
 					console.log("loaded " + cid + " ...")
 					commit({
@@ -39,7 +39,7 @@ export default {
 			})
 		},
 		fetchMarks: function ({commit}, cid) {
-			new Promise(function (resolve, reject) {
+			return new Promise(function (resolve, reject) {
 				api.getTeacherMarks(cid).then(function (resp) {
 					console.log("loaded marks of course " + cid)
 					commit({
@@ -56,9 +56,9 @@ export default {
 			});
 		},
 		setMark: function({commit}, params) {
-			new Promise(function (resolve, reject) {
+			return new Promise(function (resolve, reject) {
 				api.setMark(params).then(function(resp) {
-					console.log("wird noch nicht passieren")
+					console.log(resp)
 					resolve(resp)
 				}, function (error) {
 					console.log(error)

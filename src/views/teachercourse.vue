@@ -7,7 +7,7 @@
         <div class="pure-menu pure-menu-horizontal">
             <ul class="pure-menu-list">
                 <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                    <a id="select-course" class="pure-menu-link">Kurs</a>
+                    <a id="select-course" class="pure-menu-link">Kurs <spinner v-show="!coursesLoaded" /></a>
                     <ul class="pure-menu-children">
                         <li v-for="(course, index) in getCourses" :key="index" class="pure-menu-item">
                             <router-link :to="'/teacher/courses/'+course.cid" tag="a" :key="course.id" class="pure-menu-link">Kurs: {{ course.id }} ({{course.short}})</router-link>
@@ -16,7 +16,7 @@
                 </li>
             </ul>
         </div>
-        <br />
+        <spinner v-show="coursesReady() && id != null" />
         <table class="pure-table" v-show="id != null">
         <thead>
             <tr>
@@ -33,7 +33,7 @@
                 </td>
             </tr>
         </tbody>
-        </table> {{this.lol}}
+        </table>
         <div class="close-popup" v-show="selectorMeta.mid != null" @click="selectorMeta = {}"></div>
     </div>
 </template>
@@ -56,17 +56,39 @@ export default {
         return {
             selectorMeta: {},
             selectorStudent: {},
-            lol: "null"
+            coursesLoaded: false,
+            courseLoaded: false,
+            studentsLoaded: false,
+            error: false
         }
     },
     created() {
-		this.$store.dispatch('fetchCourses');
+        var self = this;
+		this.$store.dispatch('fetchCourses')
+        .then(function (resp) {
+            self.coursesLoaded = true
+        }, function (error) {
+            self.error = true
+        });
         if (this.id != null) { // checks if id is set in URL params
-            this.$store.dispatch('fetchStudents', this.id);
-            this.$store.dispatch('fetchMarks', this.id);
+            this.$store.dispatch('fetchStudents', this.id) // fetch all students in one course if is existant
+            .then(function (resp) {
+                self.courseLoaded = true
+            }, function (error) {
+                self.error = true
+            });
+            this.$store.dispatch('fetchMarks', this.id) // fetch all marks of the students
+            .then(function (resp) {
+                self.studentsLoaded = true
+            }, function (error) {
+                self.error = true
+            });
         }
 	},
     methods: {
+        coursesReady: function () {
+            return (!this.studentsLoaded || !this.courseLoaded)
+        },
         change: function (to) {
             var self = this
             this.$store.dispatch('setMark', {
