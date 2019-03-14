@@ -26,6 +26,10 @@ export default new Router({
             path: '/student/courses',
             component: studentcourse
         },{
+            path: '/student/courses/:id',
+            props: true,
+            component: studentcourse
+        },{
             path: '/settings',
             component: settings
         },{

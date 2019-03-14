@@ -22,6 +22,9 @@ export default {
     getTeacherCourses(teacherid) { // fetches all courses that a teacher teaches
         return api.get('/teachers/' + teacherid + '/courses')
     },
+    getStudentCourses(uid) {
+        return api.get('/students/' + uid + '/marks')
+    },
     getCourseData(courseid) { // fetches students of certain course
         return api.get('/courses/' + courseid + '/students')
     },
