@@ -68,13 +68,14 @@ export default {
 	},
     methods: {
         change: function (to) {
-            //this.selectorStudent
-            //this.selectorMeta
+            var self = this
             this.$store.dispatch('setMark', {
                 studentid: this.selectorStudent.uid,
                 courseid: this.id,
                 markmetaid: this.selectorMeta.mid,
                 mark: to
+            }).then(function(data) {
+                self.$store.dispatch('fetchMarks', self.id);
             });
         },
         showMarkSelector: function (meta, student) {

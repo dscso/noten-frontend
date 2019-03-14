@@ -29,6 +29,6 @@ export default {
         return api.get('/courses/' + cid + '/marks')
     },
     setMark(params) { // set mark
-        return api.post('/courses/' + params.courseid + '/students/' + params.studentid + '/marks/' + params.markmetaid)
+        return api.post('/courses/' + params.courseid + '/students/' + params.studentid + '/marks/' + params.markmetaid, {mark: params.mark})
     }
 }

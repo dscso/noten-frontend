@@ -47,7 +47,7 @@ export default {
 						cid: cid,
 						data: resp.data
 					})
-					// TODO state commits
+					// TODO  state commits
 					resolve(resp)
 				}, function (error) {
 					console.log("error")
@@ -59,8 +59,10 @@ export default {
 			new Promise(function (resolve, reject) {
 				api.setMark(params).then(function(resp) {
 					console.log("wird noch nicht passieren")
+					resolve(resp)
 				}, function (error) {
 					console.log(error)
+					reject(error)
 				});
 			});
 		}
