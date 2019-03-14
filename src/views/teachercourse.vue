@@ -25,18 +25,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(student, index) in getStudents(id)" :key="index" class="pure-table-odd">
+            <tr v-for="(student, index) in getStudents(id)" :key="student.uid" v-bind:class="{'pure-table-odd': index % 2 === 0}">
                 <td>{{student.surname}}, {{student.firstname}}</td>
-                <td v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid"><!-- Seems weird but needs to be like that-->
+                <td v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" @click="showMarkSelector(meta.mid, student.uid)" ><!-- Seems weird but needs to be like that-->
                     {{getElement(student, meta).mark}}
+                    <markselector v-show="selectorX == meta.mid && selectorY == student.uid" class="markselector" @onChange="change()"/>
                 </td> 
             </tr>
         </tbody>
         </table>
-        <!-- Mark selector -->
-        <div>
-            <markselector @onChange="change"/>
-        </div>
+        <div class="close-popup" v-show="selectorX != null" @click="selectorX = null"></div>
     </div>
 </template>
 
@@ -56,7 +54,8 @@ export default {
     },
     data: function () {
         return {
-            
+            selectorX: null,
+            selectorY: null
         }
     },
     created() {
@@ -67,8 +66,14 @@ export default {
         }
 	},
     methods: {
-        change: function (to) {
-            console.log('button pressed' + to)
+        change: function (to, student, meta) {
+            console.log('button pressed' + to) 
+            console.log(to)
+        },
+        showMarkSelector: function (meta, student) {
+            this.selectorX = meta;
+            this.selectorY = student
+            console.log(this.selectorX + ' ' + this.selectorY)
         },
         getElement(student, meta) { // for table generation
             var marks = this.getMarks(this.id, student.uid)
@@ -77,7 +82,7 @@ export default {
                     return marks[i]
                 }
             }
-            return {}
+            return {} // if there is no mark for this cell
         }
     },
     computed: {
@@ -102,5 +107,32 @@ th.rotate:before {
     padding-top:110%;/* takes width as reference, + 10% for faking some extra padding */
     display:inline-block;
     vertical-align:middle;
+}
+.markselector {
+    user-select: none;
+    position: relative;
+    z-index:3;
+    margin-left: -30px;
+    padding: 2px;
+    background-color: white;
+    margin-top: 10px;
+    background-color: #eee;
+}
+.markselector::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #ccc transparent ;
+}
+.close-popup {
+    top:0px;
+    width: 100%;
+    height: 100%;
+    z-index:2;
+    position: absolute;
 }
 </style>

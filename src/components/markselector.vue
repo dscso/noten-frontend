@@ -1,16 +1,15 @@
 <template>
 	<div class="selector-container">
-        <table>
-            <tr v-for="row in 5" :key="row">
-                <td>{{row}}</td>
-                <td v-for="index in 3" :key="index"><button class="selector-button" @click="$emit('onChange', 16 - (index + (row - 1) * 3)) * row">{{16 - (index + (row - 1) * 3)}}</button></td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>&nbsp;</td>
-                <td><button class="selector-button" @click="$emit('onChange',0)">0</button></td>
-            </tr>
-        </table>
+        <div>
+            <div v-for="row in 5" :key="row">
+                {{row}}
+                <span v-for="index in 3" :key="index"><button class="selector-button" @click="$emit('onChange', 16 - (index + (row - 1) * 3)) * row">{{16 - (index + (row - 1) * 3)}}</button></span>
+            </div>
+            <div>
+                6
+                <span><button class="selector-button" @click="$emit('onChange',0)">0</button></span>
+            </div>
+        </div>
 	</div>
 </template>
 <script>
