@@ -19,7 +19,7 @@
         <br />
         <table class="pure-table" v-show="id != null">
         <thead>
-            <tr>    
+            <tr>
                 <th>Name</th>
                 <th v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" class="rotate">{{meta.name}}</th>
             </tr>
@@ -27,19 +27,19 @@
         <tbody>
             <tr v-for="(student, index) in getStudents(id)" :key="student.uid" v-bind:class="{'pure-table-odd': index % 2 === 0}">
                 <td>{{student.surname}}, {{student.firstname}}</td>
-                <td v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" @click="showMarkSelector(meta.mid, student.uid)" ><!-- Seems weird but needs to be like that-->
+                <td v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" @click="showMarkSelector(meta, student)" ><!-- creates any row in this column in the table-->
                     {{getElement(student, meta).mark}}
-                    <markselector v-show="selectorX == meta.mid && selectorY == student.uid" class="markselector" @onChange="change()"/>
-                </td> 
+                    <markselector v-show="selectorMeta.mid == meta.mid && selectorStudent.uid == student.uid" v-bind:current="getElement(student, meta).mark" class="markselector" @onChange="change()"/>
+                </td>
             </tr>
         </tbody>
-        </table>
-        <div class="close-popup" v-show="selectorX != null" @click="selectorX = null"></div>
+        </table> {{this.lol}}
+        <div class="close-popup" v-show="selectorMeta.mid != null" @click="selectorMeta = {}"></div>
     </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import spinner from '../components/spinner'
 import markselector from '../components/markselector'
 
@@ -54,8 +54,9 @@ export default {
     },
     data: function () {
         return {
-            selectorX: null,
-            selectorY: null
+            selectorMeta: {},
+            selectorStudent: {},
+            lol: "null"
         }
     },
     created() {
@@ -66,14 +67,14 @@ export default {
         }
 	},
     methods: {
-        change: function (to, student, meta) {
-            console.log('button pressed' + to) 
-            console.log(to)
+        change: function (to) {
+            //this.selectorStudent
+            //this.selectorMeta
+            console.log("pressed!!!!")
         },
         showMarkSelector: function (meta, student) {
-            this.selectorX = meta;
-            this.selectorY = student
-            console.log(this.selectorX + ' ' + this.selectorY)
+            this.selectorMeta = meta;
+            this.selectorStudent = student
         },
         getElement(student, meta) { // for table generation
             var marks = this.getMarks(this.id, student.uid)
@@ -86,7 +87,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas', 'getMarks'])
+        ...mapGetters(['getCourses', 'getStudents', 'getCourse', 'getMarkMetas', 'getMarks']), // make getters accessable in this component
+        ...mapActions(['setMark'])
     }
 }
 </script>
@@ -99,8 +101,6 @@ th.rotate {
     transform: rotate(90deg);
     width:0;
 }
-
-
 th.rotate:before {
     content:'';
     width:0;
@@ -119,14 +119,14 @@ th.rotate:before {
     background-color: #eee;
 }
 .markselector::before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent transparent #ccc transparent ;
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #ccc transparent ;
 }
 .close-popup {
     top:0px;
