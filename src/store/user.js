@@ -79,7 +79,7 @@ export default {
 			return state.firstname + " " + state.surname
 		},
 		isTeacher: function (state) {
-			return (state.type === 3)
+			return (state.type === 2)
 		},
 		isStudent: function (state) {
 			return (state.type === 1)
