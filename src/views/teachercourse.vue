@@ -8,7 +8,7 @@
             <div class="pure-menu pure-menu-horizontal head-element">
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                        <a id="select-course" class="pure-menu-link">Kurs <span v-show="!coursesDownloaded">...</span></a>
+                        <a id="select-course" class="pure-menu-link">Kurs <span v-show="!coursesDownloaded">...</span><span v-show="coursesDownloaded">{{getCourse(id).short}}</span></a>
                         <ul class="pure-menu-children">
                             <li v-for="(course, index) in getCourses" :key="index" class="pure-menu-item">
                                 <router-link :to="'/teacher/courses/'+course.cid" tag="a" :key="course.id" class="pure-menu-link">Kurs: {{ course.id }} ({{course.short}})</router-link>
@@ -31,7 +31,7 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid" class="rotate">{{meta.name}}</th>
+                <th v-for="(meta, index) in getMarkMetas(id)" :key="meta.mid">{{meta.name}}</th>
             </tr>
         </thead>
         <tbody>
@@ -144,13 +144,6 @@ export default {
 </script>
 
 <style scoped>
-th.rotate {
-    text-align:center;
-    white-space:nowrap;
-    transform-origin:50% 50%;
-    transform: rotate(90deg);
-    width:0;
-}
 th.rotate:before {
     content:'';
     width:0;
@@ -183,7 +176,7 @@ th.rotate:before {
     width: 100%;
     height: 100%;
     z-index:2;
-    position: absolute;
+    position: fixed;
 }
 .head {
     display: flex;
@@ -191,9 +184,5 @@ th.rotate:before {
 .head-element {
     width: 100px;
     display: inline-block;
-}
-.pure-menu-allow-hover:focus > .pure-menu-children {
-   display: block;
-   position: absolute;
 }
 </style>
