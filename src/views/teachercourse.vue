@@ -185,4 +185,8 @@ th.rotate:before {
     width: 100px;
     display: inline-block;
 }
+.pure-menu-allow-hover > a:focus ~ .pure-menu-list {
+    display: block;
+    position: absolute;
+}
 </style>
