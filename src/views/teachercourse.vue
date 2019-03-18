@@ -192,7 +192,7 @@ th.rotate:before {
     width: 100px;
     display: inline-block;
 }
-.pure-menu-allow-hover:active > .pure-menu-children {
+.pure-menu-allow-hover:focus > .pure-menu-children {
    display: block;
    position: absolute;
 }
